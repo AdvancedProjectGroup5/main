@@ -68,3 +68,131 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+======================
+## Modified on 12.Nov
+# Movie App Project
+
+## Project Overview
+This is a movie-based web application where users can search for movies, view showtime, and join groups. The project consists of a frontend (React) and a backend (Node.js + Express), with a PostgreSQL database.
+
+## Directory Structure
+
+```plaintext
+    main/
+    ├── public/                   # Public resources for the frontend
+    ├── src/                      # Frontend code
+    │   ├── assets/               # Static assets like images
+    │   ├── components/           # Reusable React components
+    │   ├── context/              # Context API files
+    │   ├── screens/              # Page-level components
+    │   ├── App.js                # Main app component
+    │   └── index.js              # Entry point for frontend
+    ├── server/                   # Backend code and API documentation configuration
+    │   ├── api-doc/              # Swagger API documentation configuration
+    │   │   └── swaggerConfig.js  # Swagger configuration file
+    │   ├── config/               # Database configuration and environment variables
+    │   │   └── movie.sql         # SQL scripts
+    │   ├── controllers/          # Business logic controllers
+    │   ├── middlewares/          # Middleware functions
+    │   ├── models/               # Database models
+    │   ├── routes/               # API route definitions
+    │   ├── app.js                # Main Express application file
+    │   ├── index.js              # Server entry point
+    │   ├── reportWebVitals.js    # Web vitals report file for performance metrics
+    │   ├── setupTests.js         # Jest setup file for initializing testing environment
+    │   ├── package.json          # Backend dependencies and scripts
+    │   └── package-lock.json     # Backend dependency lock file
+    ├── .env                      # Environment variables file
+    ├── .gitignore                # Git ignore file
+    ├── package.json              # Project configuration and dependencies
+    ├── package-lock.json         # Frontend dependency lock file
+    └── README.md                 # Project documentation
+```
+
+# Setup Guide
+
+## Prerequisites
+
+- **Node.js and npm**: Ensure you have the latest version of [Node.js](https://nodejs.org/) installed.
+- **PostgreSQL**: Ensure the database is installed and set up. Create a new database for this project.
+
+## 1. Backend Setup (`server` Directory)
+
+1. **Navigate to the `server` folder**:
+   ```bash
+   cd server
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Configure Environment Variables: In the `server` folder, create a `.env` file and add the following variables (update values as needed)**:
+    ```plantext
+    # Server configuration
+   PORT=3001
+   
+   # Database configuration
+   DB_USER=postgres
+   DB_HOST=localhost
+   DB_NAME=your_database_name
+   DB_PASSWORD=your_pswd
+   DB_PORT=5432
+   TEST_DB_NAME=your_test_database_name
+   
+   # JWT Secret Key
+    JWT_SECRET=your_jwt_secret
+   
+    TMDB_API_KEY=your_tmdb_api_key
+    FINNKINO_API_URL=https://www.finnkino.fi/xml
+    ``` 
+
+4. **Start the Backend Server**:
+    ```bash
+   npm run devStart
+    ```
+   Once the server is running, you can access the Swagger API documentation at `http://localhost:3001/api-docs`.
+
+## 2. Frontend Setup (`Root` Directory)
+1. **Create a `.env` file in the root directory for the frontend configuration, with the following content**:
+    ```bash
+    REACT_APP_API_URL=http://localhost:3000
+    ```
+
+## 3. Frontend Setup (`src` Directory)
+1. **Navigate to the `src` folder**:
+    ```bash
+    cd src
+    ```
+   
+2. **Install dependencies**:
+    ```bash
+   npm install
+    ```
+
+4. **Start the Frontend Development Server**:
+    ```bash
+   npm start
+    ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
