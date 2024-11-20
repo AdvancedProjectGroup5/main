@@ -1,0 +1,120 @@
+/* General Reset */
+body, ul, li, a, input, button {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    /* Apply the font globally */
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar-logo span {
+    font-size: 1.5rem;
+    font-weight: 600;
+    /* Makes the logo text bold */
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 15px;
+    margin-left: auto;
+}
+
+.navbar-links li a {
+    color: #000;
+    font-size: 1rem;
+    font-weight: 500;
+    /* Slightly bolder font for links */
+    transition: color 0.3s ease;
+}
+
+.navbar-links li a:hover {
+    color: #007bff;
+}
+
+.navbar-search {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.navbar-search input {
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar-search button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: #fff;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+    }
+
+    .menu.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        gap: 10px;
+        margin: 0;
+    }
+
+    .navbar-search {
+        width: 100%;
+    }
+
+    .navbar-search input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-logo span {
+        font-size: 1.2rem;
+    }
+}
