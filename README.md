@@ -1,20 +1,20 @@
 # Work tracker
 
-##Taisheng Cheng
+## Taisheng Cheng
 
 
-##Natsuki Mine
+## Natsuki Mine
 
 
-##Dipendra Dahal
+## Dipendra Dahal
 
 
-##Georgii Panfilov
+## Georgii Panfilov
 
 
-##Mohammod Ullah
+## Mohammod Ullah
 
 
-##Cúán Tilson
+## Cúán Tilson
 UI wireframes
 Home page UI
