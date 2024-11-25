@@ -1,0 +1,377 @@
+/* Hero Section with Video Background */
+.hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    /* Adjusts the height of the hero section */
+    overflow: hidden;
+    /* Ensures the video doesn't exceed the section bounds */
+}
+
+/* Add a semi-transparent overlay to darken the video background */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black overlay */
+    z-index: 0;
+    /* Sits above the video but below the text */
+}
+
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensures the video covers the entire section */
+    z-index: -1;
+    /* Pushes the video to the background */
+}
+
+/* Hero Content Styling */
+.hero-content {
+    z-index: 1;
+    /* Ensures content is displayed above both video and overlay */
+    color: #fff;
+    /* White text for contrast */
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    /* Larger text */
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9);
+    /* Stronger shadow for visibility */
+    letter-spacing: 1px;
+    /* Slight spacing for a cinematic feel */
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    /* Larger and clearer */
+    font-weight: 500;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9);
+    /* Stronger shadow for visibility */
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.hero-buttons .btn {
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    /* Makes buttons look more cinematic */
+}
+
+.hero-buttons .btn.explore {
+    background: linear-gradient(135deg, #5d6668, #5a5b5d);
+    /* Teal to blue gradient */
+    color: white;
+    box-shadow: 0px 4px 8px rgba(108, 110, 112, 0.5);
+    /* Subtle glow */
+}
+
+.hero-buttons .btn.reviews {
+    background: linear-gradient(135deg, #454545, #585858);
+    /* Purple gradient */
+    color: white;
+    box-shadow: 0px 4px 8px rgba(108, 110, 112, 0.5);
+    /* Subtle glow */
+}
+
+.hero-buttons .btn:hover {
+    opacity: 0.95;
+    transform: scale(1.1);
+    /* Slightly stronger hover zoom effect */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    /* Enhanced glow */
+}
+
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+
+    .hero-buttons .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+}
+
+
+/* Featured Movies Section */
+.featured-movies {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    /* Light background for contrast */
+}
+
+.featured-movies h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Movie Grid */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* Responsive grid */
+    gap: 20px;
+    justify-items: center;
+}
+
+/* Movie Card */
+.movie-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 300px;
+    text-align: left;
+    position: relative;
+    /* Required for badge positioning */
+}
+
+
+.movie-card .category-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #50555b;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+
+.movie-poster {
+    background-color: #e0e0e0;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.movie-details {
+    padding: 15px;
+}
+
+.movie-details h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.movie-details p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    .movie-grid {
+        grid-template-columns: 1fr;
+        /* Single column on smaller screens */
+    }
+}
+
+/* Trending Content Section */
+.trending-content {
+    padding: 2rem;
+    background-color: #f9f9f9;
+}
+
+.trending-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.trending-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.trending-card {
+    background-color: white;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trending-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.trending-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.trending-card p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+.trending-badge {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: white;
+    background-color: #007bff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Must-Read Reviews Section */
+.must-read-reviews {
+    padding: 2rem;
+    background-color: #fff;
+}
+
+.must-read-reviews h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.review-card {
+    background-color: #f4f4f4;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.review-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.review-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.review-card h4 {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+.review-card .stars {
+    font-size: 1.2rem;
+    color: #f1c40f;
+    /* Gold color for stars */
+    margin-bottom: 0.5rem;
+}
+
+.review-card p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* Recently Viewed Section */
+.recently-viewed {
+    padding: 2rem;
+    background-color: #fff;
+}
+
+.recently-viewed h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.recently-viewed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.recently-viewed-card {
+    background-color: #f4f4f4;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.recently-viewed-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.recently-viewed-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.recently-viewed-card p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.4;
+}
