@@ -3,29 +3,32 @@ import {fetchMoviesFromTMDB, fetchMovieDetailsFromTMDB} from '../services/movieS
 export const searchMovies = async (req, res, next) => {
     try {
         const {
-            id = null,
-            title = '',
-            genre_ids = '',
+            title = "",
+            actor = "",
+            genre_ids = "",
             releaseYear = null,
-            vote_average_gte = null,
-            vote_average_lte = null,
+            releaseDate = null,
+            release_date_gte = null,
+            release_date_lte = null,
+            language = "",
+            minVote = null,
+            maxVote = null,
         } = req.query;
 
-        console.log('Request Query1:', req.query);
+        const date_gte = releaseDate || release_date_gte;
+        const date_lte = releaseDate || release_date_lte;
 
-        const parsedParams = {
-            id,
+        const movies = await fetchMoviesFromTMDB({
             title,
+            actor,
             genre_ids,
             releaseYear,
-            vote_average_gte: vote_average_gte ? parseFloat(vote_average_gte) : null,
-            vote_average_lte: vote_average_lte ? parseFloat(vote_average_lte) : null,
-        };
-
-        console.log('Request Query:', req.query);
-        console.log('Parsed Parameters:', parsedParams);
-
-        const movies = await fetchMoviesFromTMDB(parsedParams);
+            release_date_gte: date_gte,
+            release_date_lte: date_lte,
+            language,
+            vote_average_gte: minVote ? parseFloat(minVote) : undefined,
+            vote_average_lte: maxVote ? parseFloat(maxVote) : undefined,
+        });
 
         res.status(200).json(movies);
     } catch (error) {
