@@ -6,6 +6,7 @@ import errorHandler from './middlewares/errorHandler.js';
 import moviesRoutes from "./routes/movieRoutes.js";
 import showtimeRoutes from "./routes/showtimeRoutes.js"
 import { PORT } from "./config/config.js";
+import {fetchGenresFromTMDB} from "./services/genreService.js";
 
 const app = express();
 
@@ -24,7 +25,17 @@ app.use('/showtimes', showtimeRoutes);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-    console.log(`Swagger Docs available at http://localhost:${PORT}/api-docs`);
-})
+const startServer = async () => {
+    try {
+        // 初始化类型映射表
+        await fetchGenresFromTMDB();
+        app.listen(PORT, () => {
+            console.log(`Server is running on http://localhost:${PORT}`);
+            console.log(`Swagger Docs available at http://localhost:${PORT}/api-docs`);
+        });
+    } catch (error) {
+        console.error("Failed to start the server:", error.message);
+    }
+};
+
+startServer();
