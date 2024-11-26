@@ -39,6 +39,7 @@ export const searchMovies = async (req, res, next) => {
 export const getMovieDetails = async (req, res, next) => {
     try {
         const {id} = req.params;
+        console.log('Fetching details for Movie ID:', id);
         const movieDetails = await fetchMovieDetailsFromTMDB(id);
         res.status(200).json(movieDetails);
     } catch (error) {
