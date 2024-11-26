@@ -1,7 +1,8 @@
 # Work tracker
 
 ## Taisheng Cheng
-
+backend code for Movir information and showtimes part \
+backend code for Group management part \
 
 ## Natsuki Mine
 
