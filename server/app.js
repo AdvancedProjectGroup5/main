@@ -7,6 +7,8 @@ import moviesRoutes from "./routes/movieRoutes.js";
 import showtimeRoutes from "./routes/showtimeRoutes.js"
 import { PORT } from "./config/config.js";
 import {fetchGenresFromTMDB} from "./services/genreService.js";
+import favoriteRouter from './routes/favoriteRouter.js';
+
 
 const app = express();
 
@@ -22,6 +24,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/movies', moviesRoutes);
 
 app.use('/showtimes', showtimeRoutes);
+
+app.use('/favorites', favoriteRouter);
 
 app.use(errorHandler);
 
