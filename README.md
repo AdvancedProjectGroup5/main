@@ -18,4 +18,5 @@ backend code for Group management part \
 
 ## Cúán Tilson
 UI wireframes \
-Home page UI
+Home page UI \
+Movies web page UI \
