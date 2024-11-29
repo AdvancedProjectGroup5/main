@@ -48,6 +48,7 @@ const MoviesPage = () => {
         { title: "The Banshees of Inisherin", year: 2022, rating: 9.4 },
         { title: "Palm Springs", year: 2020, rating: 7.4 },
         { title: "Nomadland", year: 2020, rating: 7.5 },
+        { title: "Fifty Shades of Grey", year: 2015, rating: 69 },
     ];
 
     const toggleFilter = (filter) => {
