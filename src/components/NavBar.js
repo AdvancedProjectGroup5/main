@@ -1,11 +1,18 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // Use Link for navigation
+import { FaUser } from "react-icons/fa"; // Person icon from react-icons
 import "./NavBar.css";
 
 const NavBar = () => {
     const [menuActive, setMenuActive] = useState(false);
+    const [dropdownActive, setDropdownActive] = useState(false);
 
     const toggleMenu = () => {
         setMenuActive(!menuActive);
+    };
+
+    const toggleDropdown = () => {
+        setDropdownActive(!dropdownActive);
     };
 
     return (
@@ -23,9 +30,21 @@ const NavBar = () => {
                     <li><a href="reviews">Reviews</a></li>
                     <li><a href="showtimes">Showtimes</a></li>
                     <li><a href="groups">Groups</a></li>
-                    <li><a href="profile">Profile</a></li>
-                    <li><a href="signin">Log in</a></li>
-                    <li><a href="signup">Sign up</a></li>
+                    {/* User Dropdown */}
+                    <div className="user-dropdown">
+                        <button className="user-icon" onClick={toggleDropdown} aria-label="User menu">
+                            <FaUser size={20} />
+                        </button>
+                        {dropdownActive && (
+                            <div className="dropdown-menu">
+                                <ul>
+                                    <li><Link to="/profile">Profile</Link></li>
+                                    <li><Link to="/signin">Log in</Link></li>
+                                    <li><Link to="/signup">Sign up</Link></li>
+                                </ul>
+                            </div>
+                        )}
+                    </div>
                 </ul>
                 <div className="navbar-search">
                     <input type="text" placeholder="Search in site" />
