@@ -23,8 +23,8 @@ const Home = () => {
                     <h1>Welcome to CineCraic</h1>
                     <p>Your ultimate destination for all things movies.</p>
                     <div className="hero-buttons">
-                        <button className="btn explore">Explore Movies</button>
-                        <button className="btn reviews">Read Reviews</button>
+                        <a href="/movies" className="btn explore">Explore Movies</a>
+                        <a href="/reviews" className="btn reviews">Read Reviews</a>
                     </div>
                 </div>
             </div>
