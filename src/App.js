@@ -5,10 +5,8 @@ import Home from "./screens/Home"; // Import your screens
 import Movies from "./screens/Movies";
 import Reviews from "./screens/Reviews";
 import Profile from "./screens/Profile";
-//import LoginSignUp from "./screens/LoginSignUp";
 import Showtimes from "./screens/Showtimes";
-import SignIn from "./screens/signin.jsx";
-import SignUp from "./screens/signup.jsx";
+import Auth from "./screens/auth.jsx"; // Import the merged Auth component
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Groups from "./screens/Groups";
 import Footer from "./components/Footer.js"; // Import the Footer component
@@ -26,9 +24,8 @@ const App = () => {
             <Route path="/movies" element={<Movies />} /> {/* Route for Movies */}
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            {/* <Route path="/login" element={<LoginSignUp />} /> */}
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<Auth isSignIn={true} />} /> {/* Sign In Route */}
+            <Route path="/signup" element={<Auth isSignIn={false} />} /> {/* Sign Up Route */}
             <Route path="/showtimes" element={<Showtimes />} />
             <Route path="/groups" element={<Groups />} />
           </Routes>
