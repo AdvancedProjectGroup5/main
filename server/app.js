@@ -7,22 +7,31 @@ import errorHandler from './middlewares/errorHandler.js';
 import moviesRoutes from "./routes/movieRoutes.js";
 import showtimeRoutes from "./routes/showtimeRoutes.js"
 import {fetchGenresFromTMDB} from "./services/genreService.js";
+import groupRoutes from './routes/groupRoutes.js';
+import responseHelpers from "./middlewares/responseHelpers.js";
+import userRouter from "./routes/UserRouter.js";
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
-app.use(cors())
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 app.use(express.json())
 app.use(cookieParser())
 
 app.get('/', (req, res) => {
     res.status(200).json({result: "Success"})
 })
+
+app.use(responseHelpers);
+
+app.use('/auth', userRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use('/movies', moviesRoutes);
 
 app.use('/showtimes', showtimeRoutes);
+
+app.use('/groups', groupRoutes);
 
 app.use(errorHandler);
 
