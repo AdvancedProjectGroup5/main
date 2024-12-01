@@ -1,4 +1,5 @@
 import {fetchMoviesFromTMDB, fetchMovieDetailsFromTMDB} from '../services/movieService.js';
+import {fetchDetailedSchedule} from "../services/finnkinoService.js";
 
 export const searchMovies = async (req, res, next) => {
     try {
@@ -44,5 +45,22 @@ export const getMovieDetails = async (req, res, next) => {
         res.status(200).json(movieDetails);
     } catch (error) {
         next(error);
+    }
+};
+
+
+export const getScheduleWithDetails = async (req, res) => {
+    const { theatreID, date, language } = req.query;
+
+    if (!theatreID || !date || !language) {
+        return res.status(400).json({ error: "Missing required query parameters." });
+    }
+
+    try {
+        const schedule = await fetchDetailedSchedule(theatreID, date, language);
+        res.status(200).json(schedule);
+    } catch (error) {
+        console.error("Error fetching schedule with details:", error);
+        res.status(500).json({ error: "Failed to fetch schedule with details." });
     }
 };

@@ -30,3 +30,4 @@ export const getSchedule = async (req, res, next) => {
         next(error);
     }
 };
+
