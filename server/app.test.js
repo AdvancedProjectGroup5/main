@@ -283,7 +283,7 @@ describe('Logout', () => {
         expect(data.message).to.equal('User logged out successfully.')
     })
 
-    it ('should logout without token', async () => {
+    it ('should not logout without token', async () => {
         const response = await fetch(base_url + '/auth/logout', {
             method: 'POST',
             headers: {
@@ -297,7 +297,7 @@ describe('Logout', () => {
         expect(data.error).to.equal('Authorization required.')
     })
 
-    it ('should logout with invalid token', async () => {
+    it ('should not logout with invalid token', async () => {
         const invalidToken = 'InvalidToken'
         const response = await fetch(base_url + '/auth/logout', {
             method: 'POST',
