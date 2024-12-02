@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import "./Movies.css";
 
 const MoviesPage = () => {
@@ -35,21 +36,38 @@ const MoviesPage = () => {
     ];
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [genreSearchTerm, setGenreSearchTerm] = useState(""); // New state for genre search
+    const [genreSearchTerm, setGenreSearchTerm] = useState("");
     const [selectedLanguages, setSelectedLanguages] = useState([]);
-    const [selectedGenres, setSelectedGenres] = useState([]); // New state for selected genres
-    const [activeFilter, setActiveFilter] = useState("genres");
-
+    const [selectedGenres, setSelectedGenres] = useState([]);
     const [filteredMovies, setFilteredMovies] = useState([]);
-    const movies = [
-        { title: "The Shawshank Redemption", year: 1994, rating: 9.3 },
-        { title: "Inception", year: 2010, rating: 8.8 },
-        { title: "The Godfather", year: 1972, rating: 9.2 },
-        { title: "The Banshees of Inisherin", year: 2022, rating: 9.4 },
-        { title: "Palm Springs", year: 2020, rating: 7.4 },
-        { title: "Nomadland", year: 2020, rating: 7.5 },
-        { title: "Fifty Shades of Grey", year: 2015, rating: 69 },
-    ];
+    const [activeFilter, setActiveFilter] = useState("genres");
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const fetchMovies = async () => {
+            setIsLoading(true);
+            setError("");
+
+            try {
+                const response = await axios.get("http://your-backend-url/api/movies", {
+                    params: {
+                        search: searchTerm,
+                        genres: selectedGenres.join(","),
+                        languages: selectedLanguages.join(","),
+                    },
+                });
+                setFilteredMovies(response.data);
+            } catch (err) {
+                console.error("Error fetching movies:", err);
+                setError("Failed to fetch movies. Please try again later.");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchMovies();
+    }, [searchTerm, selectedGenres, selectedLanguages]);
 
     const toggleFilter = (filter) => {
         setActiveFilter(activeFilter === filter ? null : filter);
@@ -59,7 +77,6 @@ const MoviesPage = () => {
         if (!selectedLanguages.includes(language)) {
             setSelectedLanguages([...selectedLanguages, language]);
         }
-        setSearchTerm(""); // Clear the search input
     };
 
     const handleRemoveLanguage = (language) => {
@@ -70,7 +87,6 @@ const MoviesPage = () => {
         if (!selectedGenres.includes(genre)) {
             setSelectedGenres([...selectedGenres, genre]);
         }
-        setGenreSearchTerm(""); // Clear the genre search input
     };
 
     const handleRemoveGenre = (genre) => {
@@ -78,17 +94,7 @@ const MoviesPage = () => {
     };
 
     const handleSearch = (e) => {
-        const term = e.target.value.toLowerCase();
-        setSearchTerm(term);
-
-        if (term) {
-            const results = movies.filter((movie) =>
-                movie.title.toLowerCase().includes(term)
-            );
-            setFilteredMovies(results);
-        } else {
-            setFilteredMovies([]);
-        }
+        setSearchTerm(e.target.value);
     };
 
     return (
