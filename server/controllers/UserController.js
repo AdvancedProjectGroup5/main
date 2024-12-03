@@ -16,7 +16,7 @@ const postRegistration = async (req, res, next) => {
         const hashedPassword = await hash(req.body.password, 10)
         const userFromDb = await insertUser(req.body.email, hashedPassword, req.body.userName)
         const user = userFromDb.rows[0]
-        return res.status(201).json(createUserObject(user.id, user.email))
+        return res.status(201).json(createUserObject(user.id, user.email, user.user_name))
     } catch (error) {
         return next(error)
     }
@@ -37,7 +37,7 @@ const postLogin = async (req, res, next) => {
         .authorizationHeader(req.body.email)
         .refreshToken(req.body.email)
         .status(200)
-        .json(createUserObject(user.id, user.email))
+        .json(createUserObject(user.id, user.email, user.user_name))
 
     } catch (error) {
         return next(error)
@@ -68,10 +68,11 @@ const deleteAccount = async (req, res, next) => {
     }
 }
 
-const createUserObject = (id, email) => {
+const createUserObject = (id, email, userName) => {
     return {
         'id': id,
-        'email': email
+        'email': email,
+        'userName': userName
     }
 }
 

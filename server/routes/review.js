@@ -6,7 +6,7 @@ import {
   deleteReview,
 } from "../controllers/reviewController.js";
 
-const reviewRouter = express.reviewRouter();
+const reviewRouter = express.Router();
 
 reviewRouter.post("/", createReview);
 

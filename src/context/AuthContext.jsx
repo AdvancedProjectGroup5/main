@@ -15,27 +15,59 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const signIn = async (email, password) => {
-    const res = await api.post("/auth/login", { email, password });
-    const data = res.data;
-    setUser(data);
-    //save to local storage
-    localStorage.setItem("user", JSON.stringify(data));
-    navigate("/");
+    try {
+      const res = await api.post("/auth/login", { email: email, password: password });
+      const data = res.data;
+      const token = res.headers['authorization'].split(" ")[1];
+      setUser(data);
+      //save to local storage
+      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("token", token);
+      navigate("/");
+    } catch (error) {
+      alert(error.response.data.error ? error.response.data.error : error)
+    }
   };
 
-  const signUp = (email, password) => {
-    api.post("/auth/register", { email, password });
+  const signUp = async (email, password, userName) => {
+    try {
+      api.post("/auth/signup", { email: email, password: password, userName: userName });
+    } catch (error) {
+      alert(error.response.data.error ? error.response.data.error : error);
+    }
+    
     navigate("/signin");
   };
 
-  const signOut = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-    navigate("/");
+  const signOut = async () => {
+    try {
+      const header = { headers: { Authorization: "Bearer " + localStorage.getItem("token") } };
+      await api.post("/auth/logout", {}, header);
+      setUser(null);
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      navigate("/");
+    } catch (error) {
+      alert(error.response.data.error ? error.response.data.error : error);
+    } 
   };
 
+  const deleteAccount = async () => {
+    const userId = user.id;
+    const header = { headers: { Authorization: "Bearer " + localStorage.getItem("token") } };
+    try {
+      await api.delete("/auth/delete/"  + userId, header);
+      setUser(null);
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      navigate("/");
+    } catch (error) {
+      alert(error.response.data.error ? error.response.data.error : error);
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, signIn, signUp, signOut, deleteAccount }}>
       {children}
     </AuthContext.Provider>
   );
