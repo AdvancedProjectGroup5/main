@@ -1,4 +1,4 @@
-import { pool } from "../helper/db";
+import { pool } from "../helper/db.js";
 
 const createReview = async (req, res) => {
   const { userId, movieId, comment, rating } = req.body;
