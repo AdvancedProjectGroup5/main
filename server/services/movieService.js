@@ -60,7 +60,21 @@ export const fetchMovieDetailsFromTMDB = async (id) => {
         const {data} = await axios.get(`${TMDB_BASE_URL}/movie/${id}`, {
             params: {api_key: TMDB_API_KEY},
         });
-        return data;
+        // return data;
+        return {
+            id: data.id,
+            title: data.title,
+            overview: data.overview,
+            releaseDate: data.release_date,
+            genres: data.genres.map((genre) => genre.name),
+            voteAverage: data.vote_average,
+            posterUrl: data.poster_path
+                ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
+                : null,
+            backdropUrl: data.backdrop_path
+                ? `https://image.tmdb.org/t/p/w780${data.backdrop_path}`
+                : null,
+        };
     } catch (error) {
         if (error.response && error.response.status === 404) {
             throw new Error(`Movie with ID ${id} not found.`);
