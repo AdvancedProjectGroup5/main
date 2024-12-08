@@ -1,39 +1,42 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "./Movies.css";
 
 const MoviesPage = () => {
-    const predefinedLanguages = [
-        "English",
-        "Japanese",
-        "Hindi",
-        "Spanish",
-        "French",
-        "German",
-        "Mandarin",
-        "Korean",
-        "Italian",
-        "Arabic",
-        "Portuguese",
-        "Russian",
-        "Bengali",
-        "Punjabi",
-    ];
+    // const predefinedLanguages = [
+    //     "English",
+    //     "Japanese",
+    //     "Hindi",
+    //     "Spanish",
+    //     "French",
+    //     "German",
+    //     "Mandarin",
+    //     "Korean",
+    //     "Italian",
+    //     "Arabic",
+    //     "Portuguese",
+    //     "Russian",
+    //     "Bengali",
+    //     "Punjabi",
+    // ];
+    //
+    // const predefinedGenres = [
+    //     "Comedy",
+    //     "Romance",
+    //     "Action",
+    //     "Drama",
+    //     "Thriller",
+    //     "Horror",
+    //     "Sci-Fi",
+    //     "Fantasy",
+    //     "Adventure",
+    //     "Mystery",
+    //     "Animation",
+    //     "Documentary",
+    // ];
 
-    const predefinedGenres = [
-        "Comedy",
-        "Romance",
-        "Action",
-        "Drama",
-        "Thriller",
-        "Horror",
-        "Sci-Fi",
-        "Fantasy",
-        "Adventure",
-        "Mystery",
-        "Animation",
-        "Documentary",
-    ];
+    const [genres, setGenres] = useState([]); // fetch genres from backend
+    const [languages, setLanguages] = useState([]); // fetch languages from backend
 
     const [searchTerm, setSearchTerm] = useState("");
     const [genreSearchTerm, setGenreSearchTerm] = useState(""); // New state for genre search
@@ -42,15 +45,51 @@ const MoviesPage = () => {
     const [activeFilter, setActiveFilter] = useState("genres");
 
     const [filteredMovies, setFilteredMovies] = useState([]);
-    const movies = [
-        { title: "The Shawshank Redemption", year: 1994, rating: 9.3 },
-        { title: "Inception", year: 2010, rating: 8.8 },
-        { title: "The Godfather", year: 1972, rating: 9.2 },
-        { title: "The Banshees of Inisherin", year: 2022, rating: 9.4 },
-        { title: "Palm Springs", year: 2020, rating: 7.4 },
-        { title: "Nomadland", year: 2020, rating: 7.5 },
-        { title: "Fifty Shades of Grey", year: 2015, rating: 69 },
-    ];
+    // const movies = [
+    //     { title: "The Shawshank Redemption", year: 1994, rating: 9.3 },
+    //     { title: "Inception", year: 2010, rating: 8.8 },
+    //     { title: "The Godfather", year: 1972, rating: 9.2 },
+    //     { title: "The Banshees of Inisherin", year: 2022, rating: 9.4 },
+    //     { title: "Palm Springs", year: 2020, rating: 7.4 },
+    //     { title: "Nomadland", year: 2020, rating: 7.5 },
+    //     { title: "Fifty Shades of Grey", year: 2015, rating: 69 },
+    // ];
+
+    const movie = [];
+
+    // Fetch genres from backend
+    useEffect(() => {
+        const fetchGenres = async () => {
+            try {
+                const response = await axios.get("/genres");
+                if (response.data && Array.isArray(response.data)) {
+                    setGenres(response.data);
+                    console.log("Fetched genres:", response.data);
+                } else {
+                    console.error("Unexpected genres data format:", response.data);
+                }
+            } catch (error) {
+                console.error("Error fetching genres:", error.message);
+            }
+        };
+
+        fetchGenres();
+    }, []);
+
+    useEffect(() => {
+        const fetchLanguages = async () => {
+            try {
+                const response = await axios.get("/languages");
+                setLanguages(response.data);
+                console.log("Fetched genres:", response.data);
+            } catch (error) {
+                console.error("Error fetching languages:", error.message);
+            }
+        };
+
+        fetchLanguages();
+    }, []);
+
 
     const toggleFilter = (filter) => {
         setActiveFilter(activeFilter === filter ? null : filter);
@@ -67,9 +106,9 @@ const MoviesPage = () => {
         setSelectedLanguages(selectedLanguages.filter((lang) => lang !== language));
     };
 
-    const handleSelectGenre = (genre) => {
-        if (!selectedGenres.includes(genre)) {
-            setSelectedGenres([...selectedGenres, genre]);
+    const handleSelectGenre = (genreName) => {
+        if (!selectedGenres.includes(genreName)) {
+            setSelectedGenres([...selectedGenres, genreName]);
         }
         setGenreSearchTerm(""); // Clear the genre search input
     };
@@ -78,17 +117,23 @@ const MoviesPage = () => {
         setSelectedGenres(selectedGenres.filter((gen) => gen !== genre));
     };
 
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         const term = e.target.value.toLowerCase();
         setSearchTerm(term);
 
         if (term) {
-            const results = movies.filter((movie) =>
-                movie.title.toLowerCase().includes(term)
-            );
-            setFilteredMovies(results);
+            // const results = movies.filter((movie) =>
+            //     movie.title.toLowerCase().includes(term)
+            // );
+            // setFilteredMovies(results);
+            try {
+                const results = await axios.get("/movies/search", {params: {title: term}});
+                setFilteredMovies(results.data);
+            } catch (error) {
+                console.error("Error fetching movies:", error.message);
+            }
         } else {
-            setFilteredMovies([]);
+                setFilteredMovies([]);
         }
     };
 
@@ -114,15 +159,16 @@ const MoviesPage = () => {
                                     />
                                     {genreSearchTerm && (
                                         <ul className="dropdown-list">
-                                            {predefinedGenres
+                                            {/*{predefinedGenres*/}
+                                            {genres
                                                 .filter(
                                                     (genre) =>
-                                                        genre.toLowerCase().includes(genreSearchTerm.toLowerCase()) &&
-                                                        !selectedGenres.includes(genre)
+                                                        genre.name.toLowerCase().includes(genreSearchTerm.toLowerCase()) &&
+                                                        !selectedGenres.includes(genre.name)
                                                 )
                                                 .map((genre, index) => (
-                                                    <li key={index} onClick={() => handleSelectGenre(genre)}>
-                                                        {genre}
+                                                    <li key={index} onClick={() => handleSelectGenre(genre.name)}>
+                                                        {genre.name}
                                                     </li>
                                                 ))}
                                         </ul>
@@ -177,7 +223,8 @@ const MoviesPage = () => {
                                     />
                                     {searchTerm && (
                                         <ul className="dropdown-list">
-                                            {predefinedLanguages
+                                            {/*{predefinedLanguages*/}
+                                            { languages
                                                 .filter(
                                                     (language) =>
                                                         language.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -271,42 +318,42 @@ const MoviesPage = () => {
                 </div>
             </section>
 
-            <div class="new-releases">
+            <div className="new-releases">
                 <h2>New Releases</h2>
                 <p>Fresh movies waiting for you</p>
-                <div class="content-wrapper">
-                    <div class="movies-grid">
-                        <div class="movie-card">
-                            <div class="movie-rating">9.4</div>
-                            <div class="movie-poster"></div>
-                            <p class="movie-genre">Comedy/Horror</p>
+                <div className="content-wrapper">
+                    <div className="movies-grid">
+                        <div className="movie-card">
+                            <div className="movie-rating">9.4</div>
+                            <div className="movie-poster"></div>
+                            <p className="movie-genre">Comedy/Horror</p>
                             <h3>The Banshees of Inisherin</h3>
-                            <p class="movie-year">2022</p>
+                            <p className="movie-year">2022</p>
                         </div>
-                        <div class="movie-card">
-                            <div class="movie-rating">7.4</div>
-                            <div class="movie-poster"></div>
-                            <p class="movie-genre">Comedy</p>
+                        <div className="movie-card">
+                            <div className="movie-rating">7.4</div>
+                            <div className="movie-poster"></div>
+                            <p className="movie-genre">Comedy</p>
                             <h3>Palm Springs</h3>
-                            <p class="movie-year">2020</p>
+                            <p className="movie-year">2020</p>
                         </div>
-                        <div class="movie-card">
-                            <div class="movie-rating">7.5</div>
-                            <div class="movie-poster"></div>
-                            <p class="movie-genre">Drama</p>
+                        <div className="movie-card">
+                            <div className="movie-rating">7.5</div>
+                            <div className="movie-poster"></div>
+                            <p className="movie-genre">Drama</p>
                             <h3>Nomadland</h3>
-                            <p class="movie-year">2020</p>
+                            <p className="movie-year">2020</p>
                         </div>
-                        <div class="movie-card">
-                            <div class="movie-rating">7.5</div>
-                            <div class="movie-poster"></div>
-                            <p class="movie-genre">Drama</p>
+                        <div className="movie-card">
+                            <div className="movie-rating">7.5</div>
+                            <div className="movie-poster"></div>
+                            <p className="movie-genre">Drama</p>
                             <h3>Nomadland</h3>
-                            <p class="movie-year">2020</p>
+                            <p className="movie-year">2020</p>
                         </div>
                     </div>
-                    <div class="image-block">
-                        <div class="placeholder-image"></div>
+                    <div className="image-block">
+                        <div className="placeholder-image"></div>
                     </div>
                 </div>
             </div>

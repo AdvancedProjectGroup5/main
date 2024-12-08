@@ -8,6 +8,8 @@ import reviewRouter from "./routes/review.js";
 import moviesRoutes from "./routes/movieRoutes.js";
 import showtimeRoutes from "./routes/showtimeRoutes.js";
 import { fetchGenresFromTMDB } from "./services/genreService.js";
+import genreRoutes from "./routes/genreRoutes.js";
+import languageRoutes from "./routes/languageRoutes.js";
 
 dotenv.config();
 
@@ -26,6 +28,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/reviews", reviewRouter);
 app.use("/movies", moviesRoutes);
 app.use("/showtimes", showtimeRoutes);
+app.use("/genres", genreRoutes);
+app.use("/languages", languageRoutes);
 
 app.use(errorHandler);
 
