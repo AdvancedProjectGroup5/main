@@ -16,8 +16,8 @@ const deleteUserInfo = async (id) => {
     try {
         await pool.query('BEGIN')
         await pool.query('DELETE FROM reviews WHERE user_id = $1', [id]);
-        await pool.query('DELETE FROM favorites WHERE user_id = $1', [id]);
-        await pool.query('DELETE FROM shared_favorites WHERE user_id = $1', [id]);
+        await pool.query('DELETE FROM favourites WHERE user_id = $1', [id]);
+        //await pool.query('DELETE FROM shared_favorites WHERE user_id = $1', [id]);
         await pool.query('DELETE FROM users WHERE id = $1', [id]);
         await pool.query('COMMIT')
         

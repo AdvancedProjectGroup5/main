@@ -1,3 +1,9 @@
+drop table if exists favourites;
+drop table if exists reviews;
+drop table if exists user_groups;
+drop table if exists groups;
+drop table if exists users;
+
 -- Create Users Table
 CREATE TABLE
     users (
@@ -42,5 +48,6 @@ CREATE TABLE
         id SERIAL PRIMARY KEY,
         user_id INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
         movie_id INT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP UNIQUE (user_id, movie_id)
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        CONSTRAINT unique_user_movie UNIQUE (user_id, movie_id)
     );
