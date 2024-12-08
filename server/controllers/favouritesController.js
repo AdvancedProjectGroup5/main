@@ -1,8 +1,7 @@
 import { pool } from "../helper/db.js";
 
 const addFavourite = async (req, res) => {
-  const { userId } = req.user;
-  const { movieId } = req.body;
+  const { userId, movieId } = req.body;
 
   if (!movieId) {
     return res.status(400).json({ error: "Missing movieId" });

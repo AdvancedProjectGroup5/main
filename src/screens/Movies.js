@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./Movies.css";
 import axios from "axios";
 
@@ -35,6 +36,8 @@ const MoviesPage = () => {
     //     "Documentary",
     // ];
 
+    const navigate = useNavigate();
+    
     const [genres, setGenres] = useState([]); // fetch genres from backend
     const [languages, setLanguages] = useState([]); // fetch languages from backend
 
@@ -135,6 +138,10 @@ const MoviesPage = () => {
         } else {
                 setFilteredMovies([]);
         }
+    };
+
+    const handleMovieClick = (movieId) => {
+        navigate(`/movies/${movieId}`);
     };
 
     return (
@@ -275,7 +282,7 @@ const MoviesPage = () => {
                 <div className="movies-list">
                     {filteredMovies.length > 0 ? (
                         filteredMovies.map((movie, index) => (
-                            <div key={index} className="movie-card">
+                            <div key={index} className="movie-card" onClick={() => handleMovieClick(movie.id)}>
                                 <div className="movie-poster"></div>
                                 <h3>{movie.title}</h3>
                                 <p>{movie.year}</p>
