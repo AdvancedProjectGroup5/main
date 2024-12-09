@@ -13,3 +13,4 @@ router.get('/schedule', getSchedule);
 router.get("/detailed-schedule", getScheduleWithDetails);
 
 export default router;
+

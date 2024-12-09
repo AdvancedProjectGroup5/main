@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocs from "./api-doc/swaggerConfig.js";
 import errorHandler from "./middlewares/errorHandler.js";
-import reviewRouter from "./routes/review.js";
+import reviewRouter from "./routes/reviewRoute.js";
 import moviesRoutes from "./routes/movieRoutes.js";
 import showtimeRoutes from "./routes/showtimeRoutes.js";
 import { fetchGenresFromTMDB } from "./services/genreService.js";
