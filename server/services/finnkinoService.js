@@ -67,7 +67,7 @@ export const fetchLanguages = async () => {
 
 export const fetchSchedule = async (theatreID, date, language) => {
     try {
-        const url = `https://www.finnkino.fi/xml/Schedule?area=${theatreID}&dt=${date}&lang=${language}`;
+        const url = `https://www.finnkino.fi/xml/Schedule?area=${theatreID}&dt=${date}`;
         console.log("Fetching schedule with URL:", url);
 
         await delay(Math.random() * (3000 - 1000) + 1000);
