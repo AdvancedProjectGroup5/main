@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { parseStringPromise } from 'xml2js';
 import {fetchMoviesFromTMDB} from "./movieService.js";
-import { FINNKINO_BASE_URL } from '../config/config.js';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 

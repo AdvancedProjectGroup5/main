@@ -17,7 +17,6 @@ import userRouter from "./routes/userRoute.js";
 import favouritesRoutes from "./routes/favouritesRoute.js";
 
 dotenv.config();
-
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -32,8 +31,8 @@ app.get('/', (req, res) => {
 app.use(responseHelpers);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-app.use("/auth", userRouter);
+app.use('/auth', userRouter);
+app.use('/movies', moviesRoutes);
 
 app.use("/reviews", reviewRouter);
 
