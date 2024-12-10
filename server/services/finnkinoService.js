@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { parseStringPromise } from 'xml2js';
 import {fetchMoviesFromTMDB} from "./movieService.js";
+import { FINNKINO_BASE_URL } from '../config/config.js';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -8,7 +9,7 @@ export const fetchAreas = async () => {
     try {
         await delay(Math.random() * (3000 - 1000) + 1000);
 
-        const response = await axios.get("https://www.finnkino.fi/xml/TheatreAreas", {
+        const response = await axios.get(`${FINNKINO_BASE_URL}/TheatreAreas`, {
             headers: {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0",
                 "Accept": "application/xml",
@@ -38,7 +39,7 @@ export const fetchLanguages = async () => {
     try {
         await delay(Math.random() * (3000 - 1000) + 1000);
 
-        const response = await axios.get("https://www.finnkino.fi/xml/Languages", {
+        const response = await axios.get(`${FINNKINO_BASE_URL}/Languages`, {
             headers: {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0",
                 "Accept": "application/xml",
@@ -67,7 +68,7 @@ export const fetchLanguages = async () => {
 
 export const fetchSchedule = async (theatreID, date, language) => {
     try {
-        const url = `https://www.finnkino.fi/xml/Schedule?area=${theatreID}&dt=${date}`;
+        const url = `${FINNKINO_BASE_URL}/Schedule?area=${theatreID}&dt=${date}`;
         console.log("Fetching schedule with URL:", url);
 
         await delay(Math.random() * (3000 - 1000) + 1000);

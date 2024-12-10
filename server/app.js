@@ -5,32 +5,33 @@ import swaggerUi from "swagger-ui-express";
 import swaggerDocs from "./api-doc/swaggerConfig.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import reviewRouter from "./routes/reviewRoute.js";
+import cookieParser from 'cookie-parser';
 import moviesRoutes from "./routes/movieRoutes.js";
 import showtimeRoutes from "./routes/showtimeRoutes.js";
 import { fetchGenresFromTMDB } from "./services/genreService.js";
 import genreRoutes from "./routes/genreRoutes.js";
 import languageRoutes from "./routes/languageRoutes.js";
 import responseHelpers from "./middlewares/responseHelpers.js";
-import cookieParser from "cookie-parser";
+import groupRoutes from './routes/groupRoutes.js';
 import userRouter from "./routes/userRoute.js";
 import favouritesRoutes from "./routes/favouritesRoute.js";
 
 dotenv.config();
+
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
+app.use(express.json())
+app.use(cookieParser())
 
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
-app.use(express.json());
-app.use(cookieParser());
-
-app.get("/", (req, res) => {
-  res.status(200).json({ result: "Success" });
-});
+app.get('/', (req, res) => {
+    res.status(200).json({result: "Success"})
+})
 
 app.use(responseHelpers);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use("/auth", userRouter);
 
@@ -41,6 +42,8 @@ app.use("/showtimes", showtimeRoutes);
 app.use("/genres", genreRoutes);
 app.use("/languages", languageRoutes);
 app.use("/favourites", favouritesRoutes);
+app.use('/groups', groupRoutes);
+
 app.use(errorHandler);
 
 const startServer = async () => {
