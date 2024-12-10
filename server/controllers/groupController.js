@@ -67,22 +67,109 @@ const deleteGroup = async (req, res, next) => {
     }
 };
 
-const addMemberToGroup = async (req, res, next) => {
-    const {groupId} = req.params;
-    const {userId} = req.body;
+const applyToJoinGroup = async (req, res, next) => {
+    const { groupId } = req.params;
+    const userId = req.decodedUser.id;
 
     try {
+        const existing = await pool.query(
+            `SELECT * 
+             FROM user_groups 
+             WHERE group_id = $1 AND user_id = $2`,
+            [groupId, userId]
+        );
+
+        if (existing.rows.length > 0) {
+            return next(new ApiError('You have already applied or joined this group.', 400));
+        }
+
         const result = await pool.query(
-            `INSERT INTO user_groups (group_id, user_id, status)
-             VALUES ($1, $2, 'approved')
+            `INSERT INTO user_groups (group_id, user_id, status) 
+             VALUES ($1, $2, 'pending') 
              RETURNING *`,
             [groupId, userId]
         );
+
         res.status(201).json(result.rows[0]);
     } catch (err) {
         next(new ApiError(err.message, 400));
     }
 };
+
+const approveOrRejectUser = async (req, res, next) => {
+    const { groupId, userId } = req.params;
+    const { status } = req.body;
+    const ownerId = req.decodedUser.id;
+
+    if (!['approved', 'rejected'].includes(status)) {
+        return next(new ApiError('Invalid status. Must be "approved" or "rejected".', 400));
+    }
+
+    try {
+        const group = await pool.query(
+            `SELECT * 
+             FROM groups 
+             WHERE id = $1 AND owner_id = $2`,
+            [groupId, ownerId]
+        );
+
+        if (group.rows.length === 0) {
+            return next(new ApiError('You are not authorized to approve or reject requests for this group.', 403));
+        }
+
+        const result = await pool.query(
+            `UPDATE user_groups 
+             SET status = $1 
+             WHERE group_id = $2 AND user_id = $3 
+             RETURNING *`,
+            [status, groupId, userId]
+        );
+
+        if (result.rows.length === 0) {
+            return next(new ApiError('Request not found.', 404));
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (err) {
+        next(new ApiError(err.message, 500));
+    }
+};
+
+const getGroupMembers = async (req, res, next) => {
+    const { groupId } = req.params;
+
+    try {
+        const result = await pool.query(
+            `SELECT users.id, users.user_name, user_groups.status 
+             FROM users 
+             JOIN user_groups 
+             ON users.id = user_groups.user_id 
+             WHERE user_groups.group_id = $1`,
+            [groupId]
+        );
+
+        res.status(200).json(emptyOrRows(result));
+    } catch (err) {
+        next(new ApiError(err.message, 500));
+    }
+};
+
+// const addMemberToGroup = async (req, res, next) => {
+//     const {groupId} = req.params;
+//     const {userId} = req.body;
+//
+//     try {
+//         const result = await pool.query(
+//             `INSERT INTO user_groups (group_id, user_id, status)
+//              VALUES ($1, $2, 'approved')
+//              RETURNING *`,
+//             [groupId, userId]
+//         );
+//         res.status(201).json(result.rows[0]);
+//     } catch (err) {
+//         next(new ApiError(err.message, 400));
+//     }
+// };
 
 const removeMemberFromGroup = async (req, res, next) => {
     const {groupId, userId} = req.params;
@@ -128,7 +215,10 @@ export {
     getGroups,
     getGroupById,
     deleteGroup,
-    addMemberToGroup,
+    // addMemberToGroup,
     removeMemberFromGroup,
     addCustomContent,
+    applyToJoinGroup,
+    approveOrRejectUser,
+    getGroupMembers
 };
