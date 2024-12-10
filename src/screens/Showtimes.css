@@ -43,6 +43,50 @@ body, h1, p, div {
     border-radius: 5px;
 }
 
+/* Latest Showtimes Section */
+.latest-showtimes {
+    padding: 2rem;
+    background-color: #fff;
+}
+
+.latest-showtimes h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.latest-showtime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.latest-showtime-card {
+    background-color: #f4f4f4;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.latest-showtime-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.latest-showtime-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.latest-showtime-card p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.4;
+}
+
 /* Find Theaters Section */
 .find-theaters-container {
     display: flex;
