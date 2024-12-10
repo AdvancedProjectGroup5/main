@@ -10,17 +10,18 @@ const Groups = () => {
     // Handle group creation
     const handleCreateGroup = async () => {
         const description = prompt("Enter a description for the group:");
+        const header = { headers: { Authorization: "Bearer " + localStorage.getItem("token")}};
         if (!groupName || !description) {
             alert("Group name and description are required!");
             return;
         }
         try {
-            const response = await axios.post('/api/groups', {
-                group_name: groupName,
+            const response = await axios.post('/groups', {
+                name: groupName,
                 owner_id: userId,
                 description,
-            });
-            alert(`Group created: ${response.data.group_name}`);
+            }, header);
+            alert(`Group created: ${response.data.name}`);
             setGroupName(''); // Reset input
         } catch (error) {
             console.error(error);
@@ -35,7 +36,7 @@ const Groups = () => {
             return;
         }
         try {
-            const response = await axios.post('/api/groups/join', {
+            const response = await axios.post('/groups/join', {
                 user_id: userId,
                 group_id: groupId,
             });
