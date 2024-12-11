@@ -1,17 +1,19 @@
 import express from "express";
 import {
   createReview,
-  getUserReviews,
+  getReviewsByMovieId,
   updateReview,
   deleteReview,
 } from "../controllers/reviewController.js";
 
-const reviewRouter = express.reviewRouter();
+// const reviewRouter = express.reviewRouter();
+
+const reviewRouter = express.Router();
 
 reviewRouter.post("/", createReview);
 
-// Route to get all reviews of a specific user
-reviewRouter.get("/:userId", getUserReviews);
+// Route to get all reviews of a specific movie
+reviewRouter.get("/:movieId", getReviewsByMovieId);
 
 // Route to update a review
 reviewRouter.put("/:reviewId", updateReview);

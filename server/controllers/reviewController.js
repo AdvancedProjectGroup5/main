@@ -1,4 +1,4 @@
-import { pool } from "../helper/db";
+import { pool } from "../helper/db.js";
 
 const createReview = async (req, res) => {
   const { userId, movieId, comment, rating } = req.body;
@@ -21,13 +21,13 @@ const createReview = async (req, res) => {
 };
 
 // Get all reviews of a user
-const getUserReviews = async (req, res) => {
-  const { userId } = req.params;
+const getReviewsByMovieId = async (req, res) => {
+  const { movieId } = req.params;
 
   try {
     const reviews = await pool.query(
-      `SELECT * FROM reviews WHERE user_id = $1`,
-      [userId]
+      `SELECT user_name, rating, comment FROM reviews inner join users on reviews.user_id = users.id WHERE movie_id = $1`,
+      [movieId]
     );
     res.status(200).json(reviews.rows);
   } catch (error) {
@@ -84,4 +84,4 @@ const deleteReview = async (req, res) => {
   }
 };
 
-export { createReview, getUserReviews, updateReview, deleteReview };
+export { createReview, getReviewsByMovieId, updateReview, deleteReview };

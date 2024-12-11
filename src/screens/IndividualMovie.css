@@ -1,0 +1,164 @@
+/* Movie Info Section */
+.movie-layout-flex {
+    position: relative; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    align-items: flex-start;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    opacity: 0.8; 
+}
+
+.movie-layout-flex::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+  
+.movie-image {
+    flex: 1 1 3px;
+    margin-left: 90px;
+    margin-right: 90px;
+}
+  
+.movie-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.movie-title h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color:#fff;
+    margin-bottom: 2rem;
+}
+
+.movie-detail {
+    font-size: 1.2rem;
+    color:#fff;
+    margin-bottom: 1rem;
+}
+  
+.movie-description {
+    flex: 2 1 300px;
+    text-align: left;
+    font-size: 1.2rem;
+    color:#fff;
+    font-family: Arial, sans-serif;
+}
+
+.like-button {
+    background-color: #fff;
+    color: black;
+    font-size: 1rem;
+    padding: 0.8rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.liked-button {
+    background-color: rgb(231, 76, 60);
+    color: white;
+    font-size: 1rem;
+    padding: 0.8rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.add-review-button {
+    background-color: #000;
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border: 1px solid #fff;;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+/* Reviews Section */
+.recent-reviews-container {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: #fff;
+}
+
+.header h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.reviews {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.review-card {
+    width: 250px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #eaeaea;
+    border-radius: 50%;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+}
+
+.rating {
+    margin-left: auto;
+    color: #f5c518;
+    /* Gold color for stars */
+    font-size: 0.9rem;
+}
+
+.review-text {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+
+/* 画面幅が768px以下の場合のスタイル */
+@media (max-width: 768px) {
+.movie-layout-flex {
+    flex-direction: column;
+}
+}

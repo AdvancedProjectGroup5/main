@@ -6,13 +6,14 @@ const Auth = ({ isSignIn = true }) => {
   const { signIn, signUp } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isSignIn) {
       signIn(email, password);
     } else {
-      signUp(email, password);
+      signUp(email, password, userName);
     }
   };
 
@@ -20,6 +21,15 @@ const Auth = ({ isSignIn = true }) => {
     <div className="auth-container">
       <form className="auth-form" onSubmit={handleSubmit}>
         <h1>{isSignIn ? "Log in" : "Sign Up"}</h1>
+        {!isSignIn && (
+          <input
+            type="text"
+            placeholder="Username"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            required
+          />
+        )}
         <input
           type="email"
           placeholder="Email"

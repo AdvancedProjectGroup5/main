@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from "../context/AuthContext";
+import api from '../utils/api';
 import './Reviews.css';
 
 const Reviews = () => {
-    const [recentReviews, setRecentReviews] = useState([
-        { id: 1, user: "User1", text: "Amazing movie, a must-watch!", rating: 5 },
-        { id: 2, user: "User2", text: "Disappointing plot twists.", rating: 3 },
-        { id: 3, user: "User3", text: "Great cinematography and soundtrack.", rating: 4.5 },
-    ]);
+    // const [recentReviews, setRecentReviews] = useState([
+    //     { id: 1, user: "User1", text: "Amazing movie, a must-watch!", rating: 5 },
+    //     { id: 2, user: "User2", text: "Disappointing plot twists.", rating: 3 },
+    //     { id: 3, user: "User3", text: "Great cinematography and soundtrack.", rating: 4.5 },
+    // ]);
+
+    const navigate = useNavigate()
+    const location = useLocation();
+    const movieDetails = location.state;
+    const { user } = useAuth();
 
     const [formData, setFormData] = useState({
-        movieTitle: '',
-        userName: '',
+        movieTitle: movieDetails.title,
+        movieId: movieDetails.id,
+        userName: user.userName,
+        userId: user.id,
         rating: 0,
         comments: '',
     });
@@ -26,29 +36,37 @@ const Reviews = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newReview = {
-            id: recentReviews.length + 1,
-            user: formData.userName || "Anonymous",
-            text: formData.comments,
-            rating: formData.rating,
-        };
-        setRecentReviews([newReview, ...recentReviews]);
-        setFormData({ movieTitle: '', userName: '', rating: 0, comments: '' });
+        try {
+            const newReview = {
+                //id: recentReviews.length + 1,
+                userId: formData.userId,
+                movieId: formData.movieId,
+                comment: formData.comments,
+                rating: formData.rating,
+            };
+            const header = { headers: { Authorization: "Bearer " + localStorage.getItem("token") } };
+            api.post('/reviews', newReview, header);
+            //setRecentReviews([newReview, ...recentReviews]);
+            setFormData({ movieTitle: '',movieId: 0,  userName: '', userId: 0, rating: 0, comments: '' });
+            navigate('/movies/' + movieDetails.id);
+        } catch (error) {
+            console.error('Error submitting review:', error);
+        }
     };
 
     return (
         <div className="reviews-page">
             {/* Welcome Section */}
-            <div className="welcome-section">
+            {/* <div className="welcome-section">
                 <div className="welcome-text">
                     <h1>Welcome to Movie Reviews</h1>
                     <p>Browse, review, and share your thoughts on the latest movies.</p>
                 </div>
                 <div className="welcome-image"></div>
-            </div>
+            </div> */}
 
             {/* Recent Reviews Section */}
-            <div className="recent-reviews-container">
+            {/* <div className="recent-reviews-container">
                 <div className="header">
                     <h2>Recent Reviews</h2>
                     <p>See what others are saying about the movies they've watched.</p>
@@ -67,7 +85,7 @@ const Reviews = () => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             {/* Add Your Review Section */}
             <div className="add-review-section">
@@ -79,9 +97,11 @@ const Reviews = () => {
                         <input
                             type="text"
                             name="movieTitle"
-                            placeholder="Enter movie title"
-                            value={formData.movieTitle}
-                            onChange={handleInputChange}
+                            value={movieDetails.title}
+                            readOnly
+                            // placeholder="Enter movie title"
+                            // value={formData.movieTitle}
+                            // onChange={handleInputChange}
                         />
                     </div>
                     <div className="form-group">
@@ -89,9 +109,11 @@ const Reviews = () => {
                         <input
                             type="text"
                             name="userName"
-                            placeholder="Enter your name"
-                            value={formData.userName}
-                            onChange={handleInputChange}
+                            value={user.userName}
+                            readOnly
+                            // placeholder="Enter your name"
+                            // value={formData.userName}
+                            // onChange={handleInputChange}
                         />
                     </div>
                     <div className="form-group">

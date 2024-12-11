@@ -26,10 +26,10 @@ const NavBar = () => {
             <div className={`menu ${menuActive ? "active" : ""}`}>
                 <ul className="navbar-links">
                     <li><a href="/">Home</a></li>
-                    <li><a href="movies">Movies</a></li>
-                    <li><a href="reviews">Reviews</a></li>
-                    <li><a href="showtimes">Showtimes</a></li>
-                    <li><a href="groups">Groups</a></li>
+                    <li><a href="/movies">Movies</a></li>
+                    {/* <li><a href="reviews">Reviews</a></li> */}
+                    <li><a href="/showtimes">Showtimes</a></li>
+                    <li><a href="/groups">Groups</a></li>
                     {/* User Dropdown */}
                     <div className="user-dropdown">
                         <button className="user-icon" onClick={toggleDropdown} aria-label="User menu">
