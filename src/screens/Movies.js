@@ -37,7 +37,7 @@ const MoviesPage = () => {
     // ];
 
     const navigate = useNavigate();
-    
+
     const [genres, setGenres] = useState([]); // fetch genres from backend
     const [languages, setLanguages] = useState([]); // fetch languages from backend
 
@@ -130,13 +130,13 @@ const MoviesPage = () => {
             // );
             // setFilteredMovies(results);
             try {
-                const results = await axios.get("/movies/search", {params: {title: term}});
+                const results = await axios.get("/movies/search", { params: { title: term } });
                 setFilteredMovies(results.data);
             } catch (error) {
                 console.error("Error fetching movies:", error.message);
             }
         } else {
-                setFilteredMovies([]);
+            setFilteredMovies([]);
         }
     };
 
@@ -200,9 +200,9 @@ const MoviesPage = () => {
                         {activeFilter === "rating" && (
                             <ul>
                                 <li><input type="radio" id="1star" name="rating" /><label htmlFor="1star">1 Star</label></li>
-                                <li><input type="radio" id="2star" name="rating" /><label htmlFor="1star">2 Stars</label></li>
+                                <li><input type="radio" id="2star" name="rating" /><label htmlFor="2star">2 Stars</label></li>
                                 <li><input type="radio" id="3stars" name="rating" /><label htmlFor="3stars">3 Stars</label></li>
-                                <li><input type="radio" id="4stars" name="rating" /><label htmlFor="3stars">4 Stars</label></li>
+                                <li><input type="radio" id="4stars" name="rating" /><label htmlFor="4stars">4 Stars</label></li>
                                 <li><input type="radio" id="5stars" name="rating" /><label htmlFor="5stars">5 Stars</label></li>
                             </ul>
                         )}
@@ -231,7 +231,7 @@ const MoviesPage = () => {
                                     {searchTerm && (
                                         <ul className="dropdown-list">
                                             {/*{predefinedLanguages*/}
-                                            { languages
+                                            {languages
                                                 .filter(
                                                     (language) =>
                                                         language.toLowerCase().includes(searchTerm.toLowerCase()) &&
