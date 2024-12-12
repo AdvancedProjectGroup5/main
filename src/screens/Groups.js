@@ -53,7 +53,7 @@ const Groups = () => {
                 <h1>🎥 Welcome to Group Pages</h1>
                 <p>A collaborative space for movie enthusiasts</p>
             </header>
-            
+
 
             <div className="group-content">
                 {/* Group Actions Section */}
@@ -84,7 +84,7 @@ const Groups = () => {
                         </button>
                     </div>
                 </div>
-                
+
 
                 {/* Recent Posts Section */}
                 <div className="section">
@@ -135,10 +135,6 @@ const Groups = () => {
                 </div>
             </div>
 
-            <footer className="group-footer">
-                <p>📞 Contact Us | 🔒 Privacy Policy | 📜 Terms & Conditions</p>
-                <p>&copy; 2024 CineCraic</p>
-            </footer>
         </div>
     );
 };
