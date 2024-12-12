@@ -137,7 +137,12 @@ const Showtimes = () => {
                     <h1 className="showtimes-title">Discover Upcoming Movies</h1>
                     <p className="showtimes-subtitle">Explore showtimes for your favorite movies</p>
                 </div>
-                <div className="showtimes-image"></div>
+                <div className="showtimes-image">
+                    <img className="showtimes-image"
+                        src={"https://www.sttinfo.fi/data/images/00117/4657c2e6-4eb4-4991-a169-96996e8f0a8c.png"}
+                        alt={"Showtimes Image"}
+                    />
+                </div>
             </div>
 
             {/* Map Section */}

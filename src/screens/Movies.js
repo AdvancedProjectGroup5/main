@@ -283,7 +283,9 @@ const MoviesPage = () => {
                     {filteredMovies.length > 0 ? (
                         filteredMovies.map((movie, index) => (
                             <div key={index} className="movie-card" onClick={() => handleMovieClick(movie.id)}>
-                                <div className="movie-poster"></div>
+                                <div className="movie-poster">
+                                    <img className="movie-poster" src={movie.image} />
+                                </div>
                                 <h3>{movie.title}</h3>
                                 <p>{movie.year}</p>
                                 <p>
