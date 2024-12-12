@@ -1,0 +1,94 @@
+/* GroupPage Styling */
+.group-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Title Styling */
+.page-title {
+    text-align: center;
+    color: #333;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* Group Form Styling */
+.group-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #5c6bc0;
+}
+
+.submit-btn {
+    padding: 12px;
+    background-color: #5c6bc0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #3f4e8c;
+}
+
+/* Group List Styling */
+.group-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.group-list li {
+    padding: 15px;
+    margin: 12px 0;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.group-list li:hover {
+    background-color: #e0e7ff;
+    transform: translateX(10px);
+}
+
+.group-name {
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+}
+
+.group-description {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.group-list li .group-name,
+.group-list li .group-description {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}

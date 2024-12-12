@@ -14,6 +14,7 @@ import responseHelpers from "./middlewares/responseHelpers.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/userRoute.js";
 import favouritesRoutes from "./routes/favouritesRoute.js";
+import groupRoutes from "./routes/groupRoutes.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 3001;
@@ -41,6 +42,7 @@ app.use("/showtimes", showtimeRoutes);
 app.use("/genres", genreRoutes);
 app.use("/languages", languageRoutes);
 app.use("/favourites", favouritesRoutes);
+app.use("/groups", groupRoutes);
 app.use(errorHandler);
 
 const startServer = async () => {
