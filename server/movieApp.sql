@@ -51,3 +51,13 @@ CREATE TABLE
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT unique_user_movie UNIQUE (user_id, movie_id)
     );
+
+    CREATE TABLE group_custom_content
+(
+    id           SERIAL PRIMARY KEY,
+    group_id     INT NOT NULL REFERENCES groups (id) ON DELETE CASCADE,
+    content_type VARCHAR(50),
+    content_id   INT,
+    added_by     INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    added_at     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
