@@ -1,0 +1,18 @@
+/* GroupPage.css */
+
+/* Main container for the group page */
+.group-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #fff;
+}
+
+/* Page title */
+.page-title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}

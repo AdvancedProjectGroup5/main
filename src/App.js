@@ -9,7 +9,7 @@ import Profile from "./screens/Profile";
 import Showtimes from "./screens/Showtimes";
 import Auth from "./screens/auth.jsx"; // Import the merged Auth component
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import Groups from "./screens/Groups";
+import GroupPage from "./screens/GroupPage.js";
 import Footer from "./components/Footer.js"; // Import the Footer component
 import FavouritesPage from "./screens/favourites.jsx"; // Import the FavouritesPage component
 import "./App.css";
@@ -30,7 +30,7 @@ const App = () => {
             <Route path="/signin" element={<Auth isSignIn={true} />} /> {/* Sign In Route */}
             <Route path="/signup" element={<Auth isSignIn={false} />} /> {/* Sign Up Route */}
             <Route path="/showtimes" element={<Showtimes />} />
-            <Route path="/groups" element={<Groups />} />
+            <Route path="/groups" element={<GroupPage />} />
             <Route path="/favourites" element={<ProtectedRoute><FavouritesPage /></ProtectedRoute>} /> {/* Favourites Route */}
           </Routes>
         </div>
