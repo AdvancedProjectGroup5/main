@@ -24,7 +24,7 @@ const Home = () => {
                     <p>Your ultimate destination for all things movies.</p>
                     <div className="hero-buttons">
                         <a href="/movies" className="btn explore">Explore Movies</a>
-                        <a href="/reviews" className="btn reviews">Read Reviews</a>
+                        <a href="/groups" className="btn reviews">Join Groups</a>
                     </div>
                 </div>
             </div>
