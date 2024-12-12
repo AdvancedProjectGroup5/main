@@ -1,5 +1,6 @@
 // GroupList.js
 import React from 'react';
+import './GroupList.css';
 
 const GroupList = ({ groups }) => {
     return (
@@ -14,7 +15,7 @@ const GroupList = ({ groups }) => {
                         </li>
                     ))
                 ) : (
-                    <p>You are not part of any groups yet.</p>
+                    <p>Log in to create your group.</p>
                 )}
             </ul>
         </div>

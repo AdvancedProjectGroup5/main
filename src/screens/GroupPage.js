@@ -1,5 +1,4 @@
-// GroupPage.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import GroupForm from '../components/GroupForm';
 import GroupList from '../components/GroupList';
 
@@ -7,11 +6,7 @@ const GroupPage = () => {
     const [groups, setGroups] = useState([]);
     const [userId, setUserId] = useState(1); // Get logged-in user id (for example)
 
-    useEffect(() => {
-        fetchUserGroups();
-    }, [userId]);
-
-    const fetchUserGroups = async () => {
+    const fetchUserGroups = useCallback(async () => {
         try {
             const response = await fetch(`/api/groups/${userId}`);
             const data = await response.json();
@@ -19,7 +14,11 @@ const GroupPage = () => {
         } catch (error) {
             console.error('Error fetching groups:', error);
         }
-    };
+    }, [userId]);  // Only recreate this function when userId changes
+
+    useEffect(() => {
+        fetchUserGroups();
+    }, [userId, fetchUserGroups]); // Dependencies of useEffect
 
     const handleGroupCreated = (newGroup) => {
         setGroups((prev) => [newGroup, ...prev]);

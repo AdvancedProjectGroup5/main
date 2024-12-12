@@ -1,5 +1,6 @@
 // GroupForm.js
 import React, { useState } from 'react';
+import './GroupForm.css';
 
 const GroupForm = ({ onGroupCreated, userId }) => {
     const [name, setName] = useState('');
@@ -25,6 +26,7 @@ const GroupForm = ({ onGroupCreated, userId }) => {
 
     return (
         <form onSubmit={handleSubmit} className="group-form">
+            <div className="form-header">
             <input
                 type="text"
                 placeholder="Group Name"
@@ -32,13 +34,18 @@ const GroupForm = ({ onGroupCreated, userId }) => {
                 onChange={(e) => setName(e.target.value)}
                 className="input-field"
             />
+            </div>
+            <div className="form-descripton">
             <textarea
                 placeholder="Group Description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="input-field"
             />
+            </div>
+            <div className="form-button">
             <button type="submit" className="submit-btn">Create Group</button>
+            </div>
         </form>
     );
 };
