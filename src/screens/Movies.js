@@ -58,7 +58,28 @@ const MoviesPage = () => {
     //     { title: "Fifty Shades of Grey", year: 2015, rating: 69 },
     // ];
 
-    const movie = [];
+    const [movie, setMovie] = useState([]);
+    console.log(movie)
+
+    // Fetch movie information from backend
+    useEffect(() => {
+        const fetchMovies = async () => {
+            try {
+                const response = await axios.get("/movies/search");
+                if (response.data && Array.isArray(response.data)) {
+                    setMovie(response.data);
+                    setFilteredMovies(response.data);
+                    console.log("Fetched movies:", response.data);
+                } else {
+                    console.error("Unexpected movie data format:", response.data);
+                }
+            } catch (error) {
+                console.error("Error fetching movies:", error.message);
+            }
+        };
+
+        fetchMovies();
+    }, []);
 
     // Fetch genres from backend
     useEffect(() => {
@@ -283,7 +304,9 @@ const MoviesPage = () => {
                     {filteredMovies.length > 0 ? (
                         filteredMovies.map((movie, index) => (
                             <div key={index} className="movie-card" onClick={() => handleMovieClick(movie.id)}>
-                                <div className="movie-poster"></div>
+                                <div className="movie-poster">
+                                    <img src={movie.posterUrl} alt="Movie Poster"/>
+                                </div>
                                 <h3>{movie.title}</h3>
                                 <p>{movie.year}</p>
                                 <p>

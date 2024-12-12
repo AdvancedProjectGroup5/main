@@ -197,6 +197,10 @@
     padding: 1rem;
 }
 
+.search-results h3 {
+    color: black;
+}
+
 .search-results .movies-list {
     display: flex;
     flex-wrap: wrap;
@@ -243,6 +247,13 @@
     height: 200px;
     background-color: #ddd;
     margin-bottom: 1rem;
+}
+
+.search-results .movie-card .movie-poster img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
 }
 
 /* Media Queries for Responsiveness */
