@@ -32,6 +32,7 @@ export const searchMovies = async (req, res, next) => {
         });
 
         res.status(200).json(movies);
+        console.log("movies from movieController: " + movies.posterUrl)
     } catch (error) {
         next(error);
     }

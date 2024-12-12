@@ -13,6 +13,8 @@ export const fetchMoviesFromTMDB = async ({
                                               vote_average_gte,
                                               vote_average_lte,
                                           }) => {
+    const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
     let params = {
         api_key: TMDB_API_KEY,
         ...(title && {query: title}),
@@ -52,6 +54,9 @@ export const fetchMoviesFromTMDB = async ({
     return data.results.map((movie) => ({
         ...movie,
         genres: getGenreNames(movie.genre_ids),
+        posterUrl: movie.poster_path
+            ? `${IMAGE_BASE_URL}${movie.poster_path}`
+            : null,
     }));
 };
 

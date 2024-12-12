@@ -197,6 +197,10 @@
     padding: 1rem;
 }
 
+.search-results h3 {
+    color: white;
+}
+
 .search-results .movies-list {
     display: flex;
     flex-wrap: wrap;
