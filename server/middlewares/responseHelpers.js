@@ -16,7 +16,8 @@ const responseHelpers = (req, res, next) => {
         
         return res.cookie('refreshToken',refresh_token,{
             maxAge: 30 * 24 * 60 * 60 * 1000,
-            sameSite: 'None'
+            sameSite: 'None',
+            secure: process.env.NODE_ENV === 'production'
         })
     }
 
