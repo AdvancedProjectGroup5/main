@@ -21,14 +21,18 @@ jobs:
           submodules: true
           lfs: false
 
-      - name: Clear Node Modules Cache
-        run: rm -rf ~/.npm
+      # Cache Node Modules with a unique key
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-force-clear-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       # Install dependencies
       - name: Install Dependencies
-        run: |
-          rm -rf node_modules
-          npm ci
+        run: npm ci
 
       # Build the app
       - name: Build App
