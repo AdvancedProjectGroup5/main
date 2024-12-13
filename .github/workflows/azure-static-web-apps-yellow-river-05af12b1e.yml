@@ -21,18 +21,14 @@ jobs:
           submodules: true
           lfs: false
 
-      # Cache Node.js dependencies
-      - name: Cache Node Modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Clear Node Modules Cache
+        run: rm -rf ~/.npm
 
       # Install dependencies
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          rm -rf node_modules
+          npm ci
 
       # Build the app
       - name: Build App
