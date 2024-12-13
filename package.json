@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "cross-env CI=false react-scripts build",
+    "build": "cross-env CI=false react-scripts build && cp staticwebapp.config.json build/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
