@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./Movies.css";
-import axios from "axios";
+import api from "../utils/api";
 
 const MoviesPage = () => {
     // const predefinedLanguages = [
@@ -65,7 +65,7 @@ const MoviesPage = () => {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const response = await axios.get("/movies/search");
+                const response = await api.get("/movies/search");
                 if (response.data && Array.isArray(response.data)) {
                     setMovie(response.data);
                     setFilteredMovies(response.data);
@@ -85,7 +85,7 @@ const MoviesPage = () => {
     useEffect(() => {
         const fetchGenres = async () => {
             try {
-                const response = await axios.get("/genres");
+                const response = await api.get("/genres");
                 if (response.data && Array.isArray(response.data)) {
                     setGenres(response.data);
                     console.log("Fetched genres:", response.data);
@@ -103,7 +103,7 @@ const MoviesPage = () => {
     useEffect(() => {
         const fetchLanguages = async () => {
             try {
-                const response = await axios.get("/languages");
+                const response = await api.get("/languages");
                 setLanguages(response.data);
                 console.log("Fetched genres:", response.data);
             } catch (error) {
@@ -151,7 +151,7 @@ const MoviesPage = () => {
             // );
             // setFilteredMovies(results);
             try {
-                const results = await axios.get("/movies/search", { params: { title: term } });
+                const results = await api.get("/movies/search", { params: { title: term } });
                 setFilteredMovies(results.data);
             } catch (error) {
                 console.error("Error fetching movies:", error.message);
