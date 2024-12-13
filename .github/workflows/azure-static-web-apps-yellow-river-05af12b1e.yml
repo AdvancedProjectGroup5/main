@@ -15,48 +15,31 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      # Checkout repository
       - uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
 
-      # Clear cache and node_modules
-      - name: Clean node_modules
-        run: rm -rf node_modules package-lock.json
+      # Install dependencies and build the app
+      - name: Install Dependencies and Build
+        run: |
+          npm install
+          npm run build
 
-      # Cache Node Modules with a unique key
-      - name: Cache Node Modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-force-clear-${{ github.run_id }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      # Zip the build directory
+      - name: Zip the build output
+        run: |
+          zip -r app.zip build
 
-      # Install dependencies
-      - name: Install Dependencies
-        run: npm install
-
-      # Build the app
-      - name: Build App
-        run: npm run build
-
-      # Deploy to Azure
-      - name: Build And Deploy
-        id: builddeploy
+      # Deploy the ZIP to Azure
+      - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_YELLOW_RIVER_05AF12B1E }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          skip_build: true
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "build" # Built app content directory - optional
-          build_timeout_in_minutes: 1000 # Build time out - optional
-          ###### End of Repository/Build Configurations ######
+          app_location: "build"
+          output_location: "."
+          skip_app_build: true  
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
